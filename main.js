@@ -7,7 +7,11 @@ class BankAccount {
   }
 
   balance () {
+    const total = this.transactions.reduce(function(accumulator, currentValue) {
+      return accumulator + currentValue.amount;
+    }, 0);
 
+    return total;
   }
 
   deposit(amt) {
@@ -16,7 +20,6 @@ class BankAccount {
   }
 
   charge(amt, payee) {
-    console.log(amt);
     let newCharge = new Transaction(-Math.abs(amt), payee);
     this.transactions.push(newCharge);
   }
@@ -34,7 +37,10 @@ class Transaction {
 const myAccount = new BankAccount("12345", "Robert");
 myAccount.deposit(35);
 myAccount.charge(15, "Internet");
-console.log(myAccount);
+console.log(myAccount);                    
+
+
+console.log("My account balance is:", myAccount.balance());
 
 // Unit Tests
 
@@ -64,14 +70,10 @@ if( typeof describe == 'function'){
 
   describe("charge money to account", function(){
     it("cannot overcharge", function(){
-      let mazda = new Car("1234", 31, 13);
-      mazda.fillUp(10);
-      assert.equal(mazda.drive(50), true);
+
     })
     it("allow for positive or negative numbers", function(){
-      let mazda = new Car("1234", 31, 13);
-      mazda.fillUp(1);
-      assert.equal(mazda.drive(50), false);
+
     })
   })
 }
